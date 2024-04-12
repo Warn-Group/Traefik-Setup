@@ -1,0 +1,51 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+log:
+  level: INFO
+  format: common
+  filePath: /etc/traefik/logs/traefik.log
+
+accessLog:
+  format: common
+  filePath: /etc/traefik/logs/access.log
+  bufferingSize: 128
+
+entryPoints:
+  web:
+    address: ":80"
+
+  websecure:
+    address: ":443"
+
+  traefik:
+    address: ":8080"
+    http:
+      middlewares:
+        - "localnetwork@file"
+
+http:
+  middlewares:
+    localnetwork:
+      ipAllowList:
+        sourceRange:
+          - "127.0.0.1/32"
+          - "192.168.1.0/24"
+        ipStrategy:
+          depth: 0
+
+api:
+  dashboard: true
+  insecure: true
+  debug: true
+
+providers:
+  docker:
+    exposedByDefault: false
+    network: traefik-bridge
+    watch: true
+  file:
+    directory: /etc/traefik
+    filename: traefik.yml
+    watch: true

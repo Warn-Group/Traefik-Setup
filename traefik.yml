@@ -25,6 +25,14 @@ entryPoints:
       middlewares:
         - "localnetwork@file"
 
+api:
+  dashboard: true
+  insecure: true
+  debug: true
+
+serversTransport:
+  insecureSkipVerify: true
+
 http:
   middlewares:
     localnetwork:
@@ -35,10 +43,16 @@ http:
         ipStrategy:
           depth: 0
 
-api:
-  dashboard: true
-  insecure: true
-  debug: true
+certificatesResolvers:
+  cloudflare:
+    acme:
+      email: "paul.marisoumary@gmail.com"
+      storage: /etc/traefik/acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "1.0.0.1:53"
 
 providers:
   docker:

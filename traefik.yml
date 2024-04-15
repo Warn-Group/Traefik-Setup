@@ -83,7 +83,7 @@ http:
 certificatesResolvers:
   cloudflare:
     acme:
-      email: '{{env "CF_API_EMAIL"}}'
+      email: "paul.marisoumary@gmail.com"
       storage: /etc/traefik/acme.json
       dnsChallenge:
         provider: cloudflare

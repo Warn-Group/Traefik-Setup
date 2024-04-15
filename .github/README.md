@@ -68,6 +68,8 @@ In your project (docker) `compose.yml` file add the following lines:
       - traefik.http.routers.server.rule=Host(`your.domain.com`)
       - traefik.http.routers.server.tls=true
       - traefik.http.routers.server.tls.certresolver=cloudflare
+      # - traefik.http.routers.server.tls.domains[0].main=your.domain.com
+      # - traefik.http.routers.server.tls.domains[0].sans=*.domain.com (optional)
 
 networks:
   traefik-bridge:

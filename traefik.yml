@@ -56,10 +56,16 @@ entryPoints:
       middlewares:
         - "localnetwork@file"
 
+  ping:
+    address: ":8082"
+
 api:
   dashboard: true
   insecure: true
   debug: true
+
+ping:
+  entryPoint: "ping"
 
 serversTransport:
   insecureSkipVerify: true

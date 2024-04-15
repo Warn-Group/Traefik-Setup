@@ -10,7 +10,7 @@ log:
 accessLog:
   format: common
   filePath: /etc/traefik/logs/access.log
-  bufferingSize: 128
+  bufferingSize: 4096
 
 entryPoints:
   web:

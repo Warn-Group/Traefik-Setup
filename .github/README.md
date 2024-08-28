@@ -64,13 +64,13 @@ In your project (docker) `compose.yml` file add the following lines:
       - traefik-bridge
     labels:
       - traefik.enable=true
-      - traefik.http.routers.server.entrypoints=web, websecure
-      - traefik.http.routers.server.rule=Host(`your.domain.com`)
-      - traefik.http.services.moon-api.loadbalancer.server.port=8000
-      - traefik.http.routers.server.tls=true
-      - traefik.http.routers.server.tls.certresolver=cloudflare
-      # - traefik.http.routers.server.tls.domains[0].main=your.domain.com
-      # - traefik.http.routers.server.tls.domains[0].sans=*.domain.com (optional)
+      - traefik.http.routers.server-name.entrypoints=web, websecure
+      - traefik.http.routers.server-name.rule=Host(`your.domain.com`)
+      - traefik.http.services.server-name.loadbalancer.server.port=8000
+      - traefik.http.routers.server-name.tls=true
+      - traefik.http.routers.server-name.tls.certresolver=cloudflare
+      # - traefik.http.routers.server-name.tls.domains[0].main=your.domain.com
+      # - traefik.http.routers.server-name.tls.domains[0].sans=*.domain.com (optional)
 
 networks:
   traefik-bridge:

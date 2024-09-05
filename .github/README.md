@@ -7,7 +7,7 @@ As root.
 ### Clone
 
 ```bash
-cd /etc && git clone https://github.com/Warn-Group/Traefik-Orchestrator traefik
+cd /etc && git clone https://github.com/Warn-Group/Traefik-Setup traefik
 ```
 
 ### File structure

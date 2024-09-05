@@ -1,4 +1,4 @@
-# Traefik-Orchestrator
+# Traefik-Setup
 
 ## Setup
 
@@ -24,14 +24,14 @@ cd /etc && git clone https://github.com/Warn-Group/Traefik-Orchestrator traefik
 ```
 
 > [!NOTE]  
-> Files and folders noted as generated will be generated once traefik start.
+> Files and folders noted as generated will be generated **once** traefik starts.
 
 ### Configure the environment
 
 Inside `cloudflare.env`:
 
 - Add your Cloudflare email to the `CF_API_EMAIL` field.
-- Create and add a Cloudflare API Key to the `CF_API_KEY` field.
+- Create and add a [Cloudflare API Key](https://dash.cloudflare.com/profile/api-tokens) to the `CF_API_KEY` field.
 
 ### Create Docker Network
 
@@ -70,12 +70,18 @@ In your project (docker) `compose.yml` file add the following lines:
       - traefik.http.routers.server-name.tls=true
       - traefik.http.routers.server-name.tls.certresolver=cloudflare
       # - traefik.http.routers.server-name.tls.domains[0].main=your.domain.com
-      # - traefik.http.routers.server-name.tls.domains[0].sans=*.domain.com (optional)
+      # - traefik.http.routers.server-name.tls.domains[0].sans=*.domain.com #(optional)
 
 networks:
   traefik-bridge:
     external: true
 ```
 
-> [!NOTE]  
-> Add `networks` and `labels` inside your target service.
+> [!IMPORTANT]  
+> In every project, replace `server-name` with a **unique** name/id that will represent your project/deployment.
+
+## Examples
+
+Few examples using this repository traefik setup.
+
+- [Moon-API with Traefik](https://github.com/Warn-Group/Traefik-Moon-API)

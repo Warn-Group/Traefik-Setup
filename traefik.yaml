@@ -63,8 +63,6 @@ entryPoints:
 
 api:
   dashboard: true
-  insecure: true
-  debug: true
 
 ping:
   entryPoint: "ping"

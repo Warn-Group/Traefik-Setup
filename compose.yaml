@@ -8,7 +8,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
+    expose:
+      - "8080"
     healthcheck:
       test: ["CMD", "traefik", "healthcheck", "--ping"]
       interval: 30s
@@ -19,6 +20,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/traefik:/etc/traefik
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dashboard.rule=Host(`traefik.local`)
+      - traefik.http.routers.dashboard.entrypoints=web,websecure
+      - traefik.http.routers.dashboard.service=api@internal
+      - traefik.http.routers.dashboard.tls=true
+      - traefik.http.routers.dashboard.middlewares=localnetwork@file
 
 networks:
   traefik-bridge:

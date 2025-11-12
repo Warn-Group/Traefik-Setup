@@ -69,28 +69,31 @@ docker compose up -d
 
 ## Add a project
 
-In your project (docker) `compose.yml` file add the following lines:
+In your project (docker) `compose.yaml` file add the following lines:
 
 ```yml
     networks:
       - traefik-bridge
     labels:
       - traefik.enable=true
-      - traefik.http.routers.server-name.entrypoints=web, websecure
-      - traefik.http.routers.server-name.rule=Host(`your.domain.com`)
-      - traefik.http.services.server-name.loadbalancer.server.port=8000
-      - traefik.http.routers.server-name.tls=true
-      - traefik.http.routers.server-name.tls.certresolver=cloudflare
-      # - traefik.http.routers.server-name.tls.domains[0].main=your.domain.com
-      # - traefik.http.routers.server-name.tls.domains[0].sans=*.domain.com #(optional)
+      - traefik.http.services.service-name.loadbalancer.server.port=3000
+      - traefik.http.routers.service-name.entrypoints=web,websecure
+      - traefik.http.routers.service-name.middlewares=httpsredirect@file
+      - traefik.http.routers.service-name.rule=Host(`example.com`)
+      - traefik.http.routers.service-name.tls=true
+      - traefik.http.routers.service-name.tls.certresolver=cloudflare
+      - traefik.http.routers.service-name.tls.domains[0].main=example.com
+      - traefik.http.routers.service-name.tls.domains[0].sans=www.example.com
 
 networks:
   traefik-bridge:
     external: true
 ```
 
+Most labels used here are examples and not mandatory.
+
 > [!IMPORTANT]  
-> In every project, replace `server-name` with a **unique** name/id that will represent your project/deployment.
+> In every project, replace `service-name` with a **unique** name/id that will represent your project/deployment.
 
 ## Examples
 

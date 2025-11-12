@@ -108,5 +108,5 @@ providers:
     watch: true
   file:
     directory: /etc/traefik
-    filename: traefik.yml
+    filename: traefik.yaml
     watch: true

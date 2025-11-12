@@ -16,11 +16,11 @@ cd /etc && git clone https://github.com/Warn-Group/Traefik-Setup traefik
 /etc/traefik
     ├── acme.json # (generated)
     ├── cloudflare.env
-    ├── compose.yml
+    ├── compose.yaml
     ├── logs # (generated)
     │   ├── access.log # (generated)
     │   └── traefik.log # (generated)
-    └── traefik.yml
+    └── traefik.yaml
 ```
 
 > [!NOTE]  
@@ -30,8 +30,20 @@ cd /etc && git clone https://github.com/Warn-Group/Traefik-Setup traefik
 
 Inside `cloudflare.env`:
 
-- Add your Cloudflare email to the `CF_API_EMAIL` field.
-- Create and add a [Cloudflare API Key](https://dash.cloudflare.com/profile/api-tokens) to the `CF_API_KEY` field.
+#### Recommended:
+
+- Create a [Cloudflare API Token](https://dash.cloudflare.com/profile/api-tokens) with:
+  - **Permissions**: Zone: DNS: Edit
+  - **Zone Resource**: Select the domain(s) you'll manage
+- Add the generated Token to the `CLOUDFLARE_DNS_API_TOKEN` field.
+
+#### Alternative:
+
+- Add your Cloudflare email to the `CLOUDFLARE_EMAIL` field.
+- Add your [Cloudflare Global API Key](https://dash.cloudflare.com/profile/api-tokens) to the `CLOUDFLARE_API_KEY` field.
+
+> [!IMPORTANT]
+> Use **only one method**. Comment out the other to avoid conflicts.
 
 ### Create Docker Network
 

@@ -8,8 +8,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    expose:
-      - "8080"
     healthcheck:
       test: ["CMD", "traefik", "healthcheck", "--ping"]
       interval: 30s
@@ -23,9 +21,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.dashboard.rule=Host(`traefik.local`)
-      - traefik.http.routers.dashboard.entrypoints=web,websecure
+      - traefik.http.routers.dashboard.entrypoints=web
       - traefik.http.routers.dashboard.service=api@internal
-      - traefik.http.routers.dashboard.tls=true
       - traefik.http.routers.dashboard.middlewares=localnetwork@file
 
 networks:

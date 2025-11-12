@@ -40,10 +40,6 @@ entryPoints:
       - "2405:8100::/32"
       - "2a06:98c0::/29"
       - "2c0f:f248::/32"
-    http:
-      redirections:
-        entryPoint:
-          to: websecure
 
   websecure:
     address: ":443"
@@ -63,6 +59,7 @@ entryPoints:
 
 api:
   dashboard: true
+  insecure: true
 
 ping:
   entryPoint: ping
@@ -87,6 +84,11 @@ http:
         average: 100
         period: 1s
         burst: 50
+
+    httpsredirect:
+      redirectScheme:
+        scheme: https
+        permanent: true
 
 certificatesResolvers:
   cloudflare:

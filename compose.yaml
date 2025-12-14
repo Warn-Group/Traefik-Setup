@@ -17,7 +17,7 @@ services:
       - traefik-bridge
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /etc/traefik:/etc/traefik
+      - .:/etc/traefik
     labels:
       - traefik.enable=true
       - traefik.http.routers.dashboard.rule=Host(`traefik.local`)

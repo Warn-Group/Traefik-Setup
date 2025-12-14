@@ -7,13 +7,13 @@ As root.
 ### Clone
 
 ```bash
-cd /etc && git clone https://github.com/Warn-Group/Traefik-Setup traefik
+git clone https://github.com/Warn-Group/Traefik-Setup traefik
 ```
 
 ### File structure
 
 ```
-/etc/traefik
+traefik
     ├── acme.json # (generated)
     ├── cloudflare.env
     ├── compose.yaml

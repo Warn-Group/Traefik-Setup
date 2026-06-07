@@ -90,6 +90,12 @@ http:
         scheme: https
         permanent: true
 
+    cloudflareonly:
+      ipAllowList:
+        sourceRange: *trustedCloudflareIPs
+        ipStrategy:
+          depth: 0
+
 certificatesResolvers:
   cloudflare:
     acme:

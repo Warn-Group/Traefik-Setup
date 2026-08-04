@@ -50,7 +50,7 @@ Inside `cloudflare.env`:
 Traefik need an external docker network to properly redirect traffic, create one using the following command:
 
 ```
-docker network create traefik-bridge
+docker network create --driver overlay --attachable traefik-bridge
 ```
 
 > [!IMPORTANT]  

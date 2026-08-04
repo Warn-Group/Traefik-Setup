@@ -108,11 +108,17 @@ certificatesResolvers:
           - "1.0.0.1:53"
 
 providers:
+  # https://doc.traefik.io/traefik/reference/install-configuration/providers/swarm/
+  swarm:
+    exposedByDefault: false
+    network: traefik-bridge
+    watch: true
+  # https://doc.traefik.io/traefik/reference/install-configuration/providers/docker/
   docker:
     exposedByDefault: false
     network: traefik-bridge
     watch: true
+  # https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/
   file:
-    directory: /etc/traefik
     filename: traefik.yaml
     watch: true

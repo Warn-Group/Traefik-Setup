@@ -97,7 +97,7 @@ certificatesResolvers:
   cloudflare:
     acme:
       email: paul.marisoumary@gmail.com
-      storage: /etc/traefik/acme.json
+      storage: /etc/traefik/acme/acme.json
       dnsChallenge:
         provider: cloudflare
         resolvers:

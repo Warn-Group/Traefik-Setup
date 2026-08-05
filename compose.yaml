@@ -23,6 +23,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
+      - traefik-acme:/etc/traefik/acme
     healthcheck:
       test: ["CMD", "traefik", "healthcheck", "--ping"]
       interval: 30s
@@ -44,6 +45,9 @@ services:
         - traefik.http.routers.dashboard.tls=true
         - traefik.http.routers.dashboard.service=api@internal
         - traefik.http.routers.dashboard.middlewares=localnetwork@file
+
+volumes:
+  traefik-acme:
 
 networks:
   traefik-bridge:

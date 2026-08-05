@@ -1,7 +1,7 @@
 services:
   socket-proxy:
     image: wollomatic/socket-proxy:1
-    user: root
+    user: 65534:992 # stat -c '%g' /var/run/docker.sock
     read_only: true
     cap_drop:
       - ALL
@@ -52,9 +52,22 @@ services:
       - traefik-bridge
     volumes:
       - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
-      - ./dynamic:/etc/traefik/dynamic:ro
-      - ./acme:/etc/traefik/acme
-      - ./logs:/etc/traefik/logs
+      - type: bind
+        source: ./dynamic
+        target: /etc/traefik/dynamic
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: ./acme
+        target: /etc/traefik/acme
+        bind:
+          create_host_path: true
+      - type: bind
+        source: ./logs
+        target: /etc/traefik/logs
+        bind:
+          create_host_path: true
     healthcheck:
       test: ["CMD", "traefik", "healthcheck", "--ping"]
       interval: 30s

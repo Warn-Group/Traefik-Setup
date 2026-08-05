@@ -12,7 +12,6 @@ services:
       - socket-proxy
     command:
       - '-loglevel=info'
-      - '-allowFrom=172.20.0.0/24'
       - '-allowGET=/v1\..{1,2}/(version|containers/.*|services.*|tasks.*|networks.*|events.*|nodes.*)'
       - '-allowHEAD=/_ping'
       - '-stoponwatchdog'

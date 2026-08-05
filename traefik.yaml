@@ -54,6 +54,7 @@ entryPoints:
 api:
   dashboard: true
   insecure: false
+  disableDashboardAd: true
 
 ping:
   entryPoint: ping
@@ -114,5 +115,5 @@ providers:
     watch: true
   # https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/
   file:
-    directory: /etc/traefik/dynamic
+    directory: /etc/traefik
     watch: true

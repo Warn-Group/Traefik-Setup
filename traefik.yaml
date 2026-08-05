@@ -91,6 +91,11 @@ http:
         ipStrategy:
           depth: 0
 
+  serversTransports:
+    insecureskip:
+      insecureSkipVerify: true
+
+
 certificatesResolvers:
   cloudflare:
     acme:

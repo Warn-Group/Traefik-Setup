@@ -1,17 +1,17 @@
 services:
   socket-proxy:
     image: wollomatic/socket-proxy:1
+    user: root
     read_only: true
     cap_drop:
       - ALL
-    security_opt:
-      - no-new-privileges
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - socket-proxy
     command:
       - '-loglevel=info'
+      - '-listenip=0.0.0.0'
       - '-allowGET=/v1\..{1,2}/(version|containers/.*|services.*|tasks.*|networks.*|events.*|nodes.*)'
       - '-allowHEAD=/_ping'
       - '-stoponwatchdog'

@@ -59,9 +59,6 @@ api:
 ping:
   entryPoint: ping
 
-serversTransport:
-  insecureSkipVerify: true
-
 http:
   middlewares:
     localnetwork:

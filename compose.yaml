@@ -1,8 +1,38 @@
 services:
+  socket-proxy:
+    image: wollomatic/socket-proxy:1
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - socket-proxy
+    command:
+      - '-loglevel=info'
+      - '-allowFrom=172.20.0.0/24'
+      - '-allowGET=/v1\..{1,2}/(version|containers/.*|services.*|tasks.*|networks.*|events.*|nodes.*)'
+      - '-allowHEAD=/_ping'
+      - '-stoponwatchdog'
+      - '-shutdowngracetime=5'
+    deploy:
+      restart_policy:
+        condition: any
+      resources:
+        limits:
+          memory: 64M
+      placement:
+        constraints:
+          - node.role == manager
+
   reverse-proxy:
     image: traefik:v3.7
     env_file:
       - cloudflare.env
+    environment:
+      - DOCKER_HOST="tcp://socket-proxy:2375"
     ports:
       - target: 80
         published: 80
@@ -19,11 +49,13 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
     networks:
+      - socket-proxy
       - traefik-bridge
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
-      - traefik-acme:/etc/traefik/acme
+      - ./dynamic:/etc/traefik/dynamic:ro
+      - ./acme:/etc/traefik/acme
+      - ./logs:/etc/traefik/logs
     healthcheck:
       test: ["CMD", "traefik", "healthcheck", "--ping"]
       interval: 30s
@@ -46,9 +78,12 @@ services:
         - traefik.http.routers.dashboard.service=api@internal
         - traefik.http.routers.dashboard.middlewares=localnetwork@file
 
-volumes:
-  traefik-acme:
-
 networks:
+  socket-proxy:
+    driver: overlay
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
   traefik-bridge:
     external: true

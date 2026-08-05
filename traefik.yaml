@@ -48,18 +48,12 @@ entryPoints:
     http3:
       advertisedPort: 443
 
-  traefik:
-    address: ":8080"
-    http:
-      middlewares:
-        - localnetwork@file
-
   ping:
     address: ":8082"
 
 api:
   dashboard: true
-  insecure: true
+  insecure: false
 
 ping:
   entryPoint: ping
@@ -120,5 +114,5 @@ providers:
     watch: true
   # https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/
   file:
-    directory: /etc/traefik
+    directory: /etc/traefik/dynamic
     watch: true

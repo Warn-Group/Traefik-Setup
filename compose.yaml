@@ -12,16 +12,18 @@ services:
         published: 443
         protocol: tcp
         mode: host
-    healthcheck:
-      test: ["CMD", "traefik", "healthcheck", "--ping"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+    extra_hosts:
+      - host.docker.internal:host-gateway
     networks:
       - traefik-bridge
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - .:/etc/traefik
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     deploy:
       mode: replicated
       replicas: 1

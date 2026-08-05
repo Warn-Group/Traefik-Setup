@@ -52,22 +52,9 @@ services:
       - traefik-bridge
     volumes:
       - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
-      - type: bind
-        source: ./dynamic
-        target: /etc/traefik/dynamic
-        read_only: true
-        bind:
-          create_host_path: true
-      - type: bind
-        source: ./acme
-        target: /etc/traefik/acme
-        bind:
-          create_host_path: true
-      - type: bind
-        source: ./logs
-        target: /etc/traefik/logs
-        bind:
-          create_host_path: true
+      - ./dynamic:/etc/traefik/dynamic:ro
+      - ./logs:/etc/traefik/logs:rw
+      - ./acme:/etc/traefik/acme:rw
     healthcheck:
       test: ["CMD", "traefik", "healthcheck", "--ping"]
       interval: 30s

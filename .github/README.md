@@ -47,6 +47,8 @@ Inside `cloudflare.env`:
 
 ### Setup Docker
 
+If you haven't already, initialize Docker Swarm using the following command:
+
 ```
 docker swarm init
 ```
@@ -78,16 +80,17 @@ In your project (docker) `compose.yaml` file add the following lines:
 ```yml
     networks:
       - traefik-bridge
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.service-name.loadbalancer.server.port=3000
-      - traefik.http.routers.service-name.entrypoints=web,websecure
-      - traefik.http.routers.service-name.middlewares=httpsredirect@file
-      - traefik.http.routers.service-name.rule=Host(`example.com`)
-      - traefik.http.routers.service-name.tls=true
-      - traefik.http.routers.service-name.tls.certresolver=cloudflare
-      - traefik.http.routers.service-name.tls.domains[0].main=example.com
-      - traefik.http.routers.service-name.tls.domains[0].sans=www.example.com
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.services.service-name.loadbalancer.server.port=3000
+        - traefik.http.routers.service-name.entrypoints=web,websecure
+        - traefik.http.routers.service-name.middlewares=httpsredirect@file
+        - traefik.http.routers.service-name.rule=Host(`example.com`)
+        - traefik.http.routers.service-name.tls=true
+        - traefik.http.routers.service-name.tls.certresolver=cloudflare
+        - traefik.http.routers.service-name.tls.domains[0].main=example.com
+        - traefik.http.routers.service-name.tls.domains[0].sans=www.example.com
 
 networks:
   traefik-bridge:

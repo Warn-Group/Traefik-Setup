@@ -48,18 +48,13 @@ entryPoints:
     http3:
       advertisedPort: 443
 
-  traefik:
-    address: ":8080"
-    http:
-      middlewares:
-        - localnetwork@file
-
   ping:
     address: ":8082"
 
 api:
   dashboard: true
-  insecure: true
+  insecure: false
+  disableDashboardAd: true
 
 ping:
   entryPoint: ping
@@ -108,11 +103,17 @@ certificatesResolvers:
           - "1.0.0.1:53"
 
 providers:
+  # https://doc.traefik.io/traefik/reference/install-configuration/providers/swarm/
+  swarm:
+    exposedByDefault: false
+    network: traefik-bridge
+    watch: true
+  # https://doc.traefik.io/traefik/reference/install-configuration/providers/docker/
   docker:
     exposedByDefault: false
     network: traefik-bridge
     watch: true
+  # https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/
   file:
     directory: /etc/traefik
-    filename: traefik.yaml
     watch: true

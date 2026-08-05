@@ -1,8 +1,6 @@
 services:
   reverse-proxy:
     image: traefik:v3.7
-    container_name: traefik-orchestrator
-    restart: always
     env_file:
       - cloudflare.env
     ports:

@@ -45,7 +45,11 @@ Inside `cloudflare.env`:
 > [!IMPORTANT]
 > Use **only one method**. Comment out the other to avoid conflicts.
 
-### Create Docker Network
+### Setup Docker
+
+```
+docker swarm init
+```
 
 Traefik need an external docker network to properly redirect traffic, create one using the following command:
 
@@ -61,7 +65,7 @@ docker network create --driver overlay --attachable traefik-bridge
 Inside `/etc/traefik` run the following command:
 
 ```
-docker compose up -d
+docker stack deploy -c compose.yaml traefik
 ```
 
 > [!NOTE]  

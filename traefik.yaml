@@ -120,5 +120,5 @@ providers:
     watch: true
   # https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/
   file:
-    filename: /etc/traefik/traefik.yaml
+    directory: /etc/traefik
     watch: true

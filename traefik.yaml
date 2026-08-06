@@ -4,7 +4,7 @@ global:
 
 log:
   level: INFO
-  format: json
+  format: common
   filePath: /etc/traefik/logs/traefik.log
 
 accessLog:
@@ -14,7 +14,7 @@ accessLog:
 
 entryPoints:
   web:
-    address: ":80"
+    address: ":10080"
     forwardedHeaders:
       trustedIPs: &trustedCloudflareIPs
       # https://www.cloudflare.com/ips/
@@ -42,7 +42,7 @@ entryPoints:
       - "2c0f:f248::/32"
 
   websecure:
-    address: ":443"
+    address: ":10443"
     forwardedHeaders:
       trustedIPs: *trustedCloudflareIPs
     http3:
@@ -131,5 +131,5 @@ providers:
     watch: true
   # https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/
   file:
-    directory: /etc/traefik/dynamic
+    filename: /etc/traefik/traefik.yaml
     watch: true

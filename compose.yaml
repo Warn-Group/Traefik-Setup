@@ -1,21 +1,21 @@
 services:
   socket-proxy:
-    image: wollomatic/socket-proxy:1
-    user: 65534:992 # stat -c '%g' /var/run/docker.sock
+    image: tecnativa/docker-socket-proxy:v0.5
+    user: "65534"
     read_only: true
     cap_drop:
       - ALL
+    environment:
+      CONTAINERS: 1
+      SERVICES: 1
+      TASKS: 1
+      NETWORKS: 1
+      NODES: 1
+      EVENTS: 1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - socket-proxy
-    command:
-      - '-loglevel=info'
-      - '-listenip=0.0.0.0'
-      - '-allowGET=/v1\..{1,2}/(version|containers/.*|services.*|tasks.*|networks.*|events.*|nodes.*)'
-      - '-allowHEAD=/_ping'
-      - '-stoponwatchdog'
-      - '-shutdowngracetime=5'
     deploy:
       restart_policy:
         condition: any
@@ -30,18 +30,16 @@ services:
     image: traefik:v3.7
     env_file:
       - cloudflare.env
-    environment:
-      - DOCKER_HOST="tcp://socket-proxy:2375"
     ports:
-      - target: 80
+      - target: 10080
         published: 80
         protocol: tcp
         mode: host
-      - target: 443
+      - target: 10443
         published: 443
         protocol: tcp
         mode: host
-      - target: 443
+      - target: 10443
         published: 443
         protocol: udp
         mode: host

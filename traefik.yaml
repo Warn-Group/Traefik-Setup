@@ -14,7 +14,7 @@ accessLog:
 
 entryPoints:
   web:
-    address: ":10080"
+    address: ":80"
     forwardedHeaders:
       trustedIPs: &trustedCloudflareIPs
       # https://www.cloudflare.com/ips/
@@ -42,7 +42,7 @@ entryPoints:
       - "2c0f:f248::/32"
 
   websecure:
-    address: ":10443"
+    address: ":443"
     forwardedHeaders:
       trustedIPs: *trustedCloudflareIPs
     http3:

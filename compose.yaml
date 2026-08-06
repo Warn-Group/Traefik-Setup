@@ -27,15 +27,15 @@ services:
     env_file:
       - cloudflare.env
     ports:
-      - target: 10080
+      - target: 80
         published: 80
         protocol: tcp
         mode: host
-      - target: 10443
+      - target: 443
         published: 443
         protocol: tcp
         mode: host
-      - target: 10443
+      - target: 443
         published: 443
         protocol: udp
         mode: host
@@ -46,7 +46,6 @@ services:
       - traefik-bridge
     volumes:
       - ./traefik.yaml:/etc/traefik/traefik.yaml:ro
-      - ./dynamic:/etc/traefik/dynamic:ro
       - ./logs:/etc/traefik/logs:rw
       - ./acme:/etc/traefik/acme:rw
     healthcheck:

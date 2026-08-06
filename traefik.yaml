@@ -103,11 +103,6 @@ certificatesResolvers:
         resolvers:
           - "1.1.1.1:53"
           - "1.0.0.1:53"
-  tlschallenge:
-    acme:
-      email: ops@warn.group
-      storage: /etc/traefik/acme/tls.json
-      tlsChallenge: {}
   staging:
     acme:
       email: ops@warn.group
